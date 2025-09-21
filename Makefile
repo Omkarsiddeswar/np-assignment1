@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -O2 -Wall
-SRCS = clientmain.cpp
+SRCS = servermain.cpp
 OBJS = $(SRCS:.cpp=.o)
-TARGET = client
+TARGET = server
 
 all: $(TARGET)
 
