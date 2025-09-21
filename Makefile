@@ -1,34 +1,15 @@
-CC_FLAGS= -Wall -I.
-LD_FLAGS= -Wall -L./ 
+CXX = g++
+CXXFLAGS = -std=c++17 -O2 -Wall
+SRCS = clientmain.cpp
+OBJS = $(SRCS:.cpp=.o)
+TARGET = client
 
+all: $(TARGET)
 
-all: libcalc test client server
-
-servermain.o: servermain.cpp
-	$(CXX)  $(CC_FLAGS) $(CFLAGS) -c servermain.cpp 
-
-clientmain.o: clientmain.cpp
-	$(CXX) $(CC_FLAGS) $(CFLAGS) -c clientmain.cpp 
-
-main.o: main.cpp
-	$(CXX) $(CC_FLAGS) $(CFLAGS) -c main.cpp 
-
-
-test: main.o calcLib.o
-	$(CXX) $(LD_FLAGS) -o test main.o -lcalc
-
-client: clientmain.o calcLib.o
-	$(CXX) $(LD_FLAGS) -o client clientmain.o -lcalc
-
-server: servermain.o calcLib.o
-	$(CXX) $(LD_FLAGS) -o server servermain.o -lcalc
-
-
-calcLib.o: calcLib.c calcLib.h
-	gcc -Wall -fPIC -c calcLib.c
-
-libcalc: calcLib.o
-	ar -rc libcalc.a -o calcLib.o
+$(TARGET): $(SRCS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
 
 clean:
-	rm *.o *.a test server client
+	rm -f $(TARGET) *.o
+
+.PHONY: all clean
